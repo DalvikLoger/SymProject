@@ -14,32 +14,36 @@ class Ingredient
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private ?int $id;
 
-    #[ORM\Column(type:'string', length: 50)]
-    #[Assert\Length(min: 2, max: 50)]
+    #[ORM\Column(type: 'string', length: 50)]
     #[Assert\NotBlank()]
-    private ?string $name = null;
+    #[Assert\Length(min: 2, max: 50)]
+    private string $name;
 
-    #[ORM\Column]
-    #[Assert\LessThan(200)]
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotNull()]
     #[Assert\Positive()]
-    #[Assert\NotNull()]
-    private ?float $price = null;
+    #[Assert\LessThan(200)]
+    private float $price;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull()]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt;
 
-    #[ORM\ManyToOne(inversedBy: 'ingredients')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ingredients')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private $user;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -50,7 +54,7 @@ class Ingredient
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -62,7 +66,7 @@ class Ingredient
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
@@ -74,7 +78,7 @@ class Ingredient
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -91,11 +95,10 @@ class Ingredient
         return $this->user;
     }
 
-    public function setUser(?User $user): static
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
-
 }
