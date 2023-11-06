@@ -64,6 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ingredients = new ArrayCollection();
         $this->recipes = new ArrayCollection();
         $this->marks = new ArrayCollection();
+        
     }
 
     public function getId(): ?int

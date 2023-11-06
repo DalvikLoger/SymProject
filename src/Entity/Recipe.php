@@ -92,6 +92,7 @@ class Recipe
         $this->createdAt = new \DateTimeImmutable;
         $this->updateAt = new \DateTimeImmutable();
         $this->marks = new ArrayCollection();
+        
     }
 
     #[ORM\PrePersist()]

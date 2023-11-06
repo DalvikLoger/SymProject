@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(
     fields: ['user', 'recipe'],
     errorPath: 'user',
-    message:'Cet utilisateur a déjà noté cette recette.'
+    message:'Cet utilisateur a déjà noté ce projet.'
 )]
 class Mark
 {
@@ -39,6 +39,7 @@ class Mark
     public function __contruct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        
     }
 
     public function getId(): ?int
