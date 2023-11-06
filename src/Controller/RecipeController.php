@@ -30,7 +30,7 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
-    #[Route('/recette', name: 'recipe.index', methods: ['GET'])]
+    #[Route('/projet', name: 'recipe.index', methods: ['GET'])]
     public function index(
         RecipeRepository $repository,
         PaginatorInterface $paginator,
@@ -47,7 +47,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/recette/communaute', 'recipe.community', methods: ['GET'])]
+    #[Route('/projet/communaute', 'recipe.community', methods: ['GET'])]
     public function indexPublic(
         RecipeRepository $repository,
         PaginatorInterface $paginator,
@@ -78,7 +78,7 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[IsGranted('ROLE_USER')]
-    #[Route('/recette/creation', 'recipe.new', methods: ['GET', 'POST'])]
+    #[Route('/projet/creation', 'recipe.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $recipe = new Recipe();
@@ -94,7 +94,7 @@ class RecipeController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre recette a été créé avec succès !'
+                'Votre projet a été créé avec succès !'
             );
 
             return $this->redirectToRoute('recipe.index');
@@ -114,14 +114,15 @@ class RecipeController extends AbstractController
      * @return Response
      */
     #[Security("is_granted('ROLE_USER') and user === recipe.getUser()")]
-    #[Route('/recette/edition/{id}', 'recipe.edit', methods: ['GET', 'POST'])]
+    #[Route('/projet/edition/{id}', 'recipe.edit', methods: ['GET', 'POST'])]
     public function edit(
         Recipe $recipe,
         Request $request,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager, 
     ): Response {
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
@@ -131,7 +132,7 @@ class RecipeController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre recette a été modifié avec succès !'
+                'Votre projet a été modifié avec succès !'
             );
 
             return $this->redirectToRoute('recipe.index');
@@ -149,7 +150,7 @@ class RecipeController extends AbstractController
      * @param Recipe $recipe
      * @return Response
      */
-    #[Route('/recette/suppression/{id}', 'recipe.delete', methods: ['GET'])]
+    #[Route('/projet/suppression/{id}', 'recipe.delete', methods: ['GET'])]
     #[Security("is_granted('ROLE_USER') and user === recipe.getUser()")]
     public function delete(
         EntityManagerInterface $manager,
@@ -160,7 +161,7 @@ class RecipeController extends AbstractController
 
         $this->addFlash(
             'success',
-            'Votre recette a été supprimé avec succès !'
+            'Votre projet a été supprimé avec succès !'
         );
 
         return $this->redirectToRoute('recipe.index');

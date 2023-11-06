@@ -78,7 +78,7 @@ class Recipe
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(type:'boolean')]
+    #[ORM\Column(type:'boolean', nullable:true)]
     private ?bool $isPublic = null;
 
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Mark::class, orphanRemoval: true)]

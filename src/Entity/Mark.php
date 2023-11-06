@@ -34,6 +34,7 @@ class Mark
     private ?Recipe $recipe = null;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __contruct()
